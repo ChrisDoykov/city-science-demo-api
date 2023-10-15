@@ -1,12 +1,11 @@
 {
   "name": "city-science-demo-api",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "City Science Demo API.",
   "main": "api/src/index.js",
   "type": "module",
   "scripts": {
     "start": "node api/src/index.js",
-    "postinstall": "yarn add pg pg-hstore",
     "dev": "env-cmd -f .env nodemon -e js,tsx,css,scss,json,graphql api/src/index.js",
     "docker": "env-cmd -f .env docker build --no-cache -t cs-api . && docker run -it -p 4000:4000 --env-file .env cs-api",
     "test": "jest"
