@@ -1,3 +1,4 @@
+import * as pg from "pg";
 import Sequelize from "sequelize";
 import { env } from "../utils.js";
 import userModel from "./user.js";
@@ -10,6 +11,7 @@ const sequelize = new Sequelize({
   password: env("POSTGRES_PASSWORD"),
   host: env("POSTGRES_HOST"),
   dialect: "postgres",
+  dialectModule: pg,
   dialectOptions: {
     ssl: {
       require: true,
