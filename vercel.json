@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/src/index.js": {
+      "maxDuration": 300
+    }
+  },
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "/api/src/index.js"
+    }
+  ]
+}

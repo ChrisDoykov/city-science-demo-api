@@ -1,0 +1,9 @@
+node_modules
+*.env
+.envrc
+client
+.vercel
+files
+.DS_Store
+yarn-error.log
+api/src/resolvers/queries/dft_traffic_counts_aadf_by_direction.csv
