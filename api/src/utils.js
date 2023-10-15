@@ -19,8 +19,7 @@ export const setSessionCookie = (res, sessionCookie) => {
   res.cookie("sessionToken", sessionCookie, {
     httpOnly: true,
     secure: true,
-    domain: ".kristiyandoykov.com",
-    sameSite: "none", // To be able to use the Apollo Studio for testing
+    sameSite: env("NODE_ENV") !== "localhost", // To be able to use the Apollo Studio for testing
     /* Typically good to have for production when
      * client and API are on the same domain
      */
