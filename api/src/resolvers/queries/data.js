@@ -2,9 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import csv from "csv-parser";
 import * as url from "url";
-import AWS from "aws-sdk";
 import { json2csv } from "json-2-csv";
-import { env } from "../../utils.js";
 import { Op } from "sequelize";
 import { GraphQLError } from "graphql";
 
@@ -84,19 +82,8 @@ export async function getTrafficDataBetweenYears(
     //   }
     // );
 
-    // Instantiate S3 client
-    const s3 = new AWS.S3({
-      apiVersion: "2006-03-01",
-      accessKeyId: env("FILEBASE_KEY"),
-      secretAccessKey: env("FILEBASE_SECRET"),
-      endpoint: "https://s3.filebase.com",
-      region: "us-east-1",
-      s3ForcePathStyle: true,
-    });
-
     // Each year range maps to exactly one key
-    const KEY = `traffic/${fromYear}-${toYear}.csv`;
-    const contentType = "text/csv";
+    const KEY = `traffic-data-${fromYear}-${toYear}.csv`;
 
     // Initially try and check if we already have this data generated
     // If we do -> fetch the record and return it
@@ -121,44 +108,16 @@ export async function getTrafficDataBetweenYears(
     });
 
     // Convert to CSV
-    const csv = await json2csv(trafficData);
+    // Deep clone is required to remove other fields (otherwise we get dataValues.id, etc.)
+    const csv = await json2csv(JSON.parse(JSON.stringify(trafficData)));
 
-    // Upload to S3
-    const uploadParams = {
-      Bucket: env("FILEBASE_BUCKET_NAME"),
-      Key: KEY,
-      ContentType: contentType,
-      Body: csv,
-      ACL: "public-read",
-    };
-
-    const request = s3.putObject(uploadParams);
-
-    // Retrieve the CID of the file to use in the end link
-    let cid;
-    request.on("httpHeaders", async (_, headers) => {
-      cid = headers["x-amz-meta-cid"];
+    // Store in db
+    const newRecord = await db.Record.create({
+      key: KEY,
+      data: csv,
     });
 
-    // Promisify S3 request and return the resolution
-    const result = await new Promise((resolve) => {
-      request.send(async (error, data) => {
-        if (error) {
-          console.error("Failed to upload data to S3: ", error);
-          resolve(null);
-        } else if (data) {
-          // Create the new record in the DB in order to not calculate again
-          const URL = `https://ipfs.filebase.io/ipfs/${cid}`;
-          const newRecord = await db.Record.create({
-            key: KEY,
-            url: URL,
-          });
-          resolve(newRecord);
-        }
-      });
-    });
-
-    return result;
+    return newRecord;
   }
   throw new GraphQLError(`Please authenticate first!`, {
     extensions: { code: "NO_AUTH" },

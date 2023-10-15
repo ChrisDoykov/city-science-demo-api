@@ -4,9 +4,8 @@ export default (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    url: {
+    data: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
   });
   return Record;

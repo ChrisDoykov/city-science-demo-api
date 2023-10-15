@@ -13,7 +13,7 @@ type User {
 type Record {
     id: ID!
     key: String!
-    url: String!
+    data: JSON
     updatedAt: DateTime!
     createdAt: DateTime!
 }

@@ -23,6 +23,7 @@ import express from "express";
 import * as requestIp from "request-ip";
 
 // Utils
+import { equals, includes } from "ramda";
 import { env, tokenIsValid } from "./utils.js";
 
 // Resolvers
@@ -34,7 +35,6 @@ import typeDefs from "./schema.js";
 
 // Import our DB
 import db from "./models/index.js";
-import { equals, includes } from "ramda";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -76,7 +76,7 @@ let plugins = [ApolloServerPluginDrainHttpServer({ httpServer })];
 //   plugins.push(ApolloServerPluginLandingPageDisabled());
 
 const server = new ApolloServer({
-  /* For the same reason above I'm leaving in introspection */
+  /* For the same reason above I'm leaving in introspection (enabled by default) */
   // introspection: env("NODE_ENV") === "localhost",
   schema,
   plugins,
