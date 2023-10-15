@@ -1,6 +1,6 @@
 {
   "name": "city-science-demo-api",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "City Science Demo API.",
   "main": "api/src/index.js",
   "type": "module",
