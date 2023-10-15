@@ -1,4 +1,4 @@
-import * as pg from "pg";
+import pg from "pg";
 import Sequelize from "sequelize";
 import { env } from "../utils.js";
 import userModel from "./user.js";
