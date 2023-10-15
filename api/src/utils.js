@@ -19,6 +19,7 @@ export const setSessionCookie = (res, sessionCookie) => {
   res.cookie("sessionToken", sessionCookie, {
     httpOnly: true,
     secure: true,
+    domain: ".vercel.app",
     sameSite: "none", // To be able to use the Apollo Studio for testing
     /* Typically good to have for production when
      * client and API are on the same domain
