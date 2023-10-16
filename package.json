@@ -8,7 +8,7 @@
     "start": "node api/src/index.js",
     "dev": "env-cmd -f .env nodemon -e js,tsx,css,scss,json,graphql api/src/index.js",
     "docker": "env-cmd -f .env docker build --no-cache -t cs-api . && docker run -it -p 4000:4000 --env-file .env cs-api",
-    "test": "mocha"
+    "test": "env-cmd -f .env mocha"
   },
   "author": "Kristiyan Doykov",
   "license": "ISC",

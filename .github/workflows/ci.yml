@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,4 +22,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn install
-    - run: yarn test
+    - name: Run tests
+      run: mocha
+      env:
+        POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+        POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        APP_SECRET: ${{ secrets.APP_SECRET }}
