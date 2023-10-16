@@ -8,7 +8,7 @@
     "start": "node api/src/index.js",
     "dev": "env-cmd -f .env nodemon -e js,tsx,css,scss,json,graphql api/src/index.js",
     "docker": "env-cmd -f .env docker build --no-cache -t cs-api . && docker run -it -p 4000:4000 --env-file .env cs-api",
-    "test": "jest"
+    "test": "mocha"
   },
   "author": "Kristiyan Doykov",
   "license": "ISC",
@@ -34,8 +34,9 @@
     "sequelize-cli-esm": "^5.0.6"
   },
   "devDependencies": {
+    "chai": "^4.3.10",
     "csv-parser": "^3.0.0",
-    "jest": "^29.7.0",
+    "mocha": "^10.2.0",
     "nodemon": "^3.0.1"
   }
 }

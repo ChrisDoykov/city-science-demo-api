@@ -20,6 +20,6 @@ In order to run all the unit tests for the API use the following command:
 yarn test
 ```
 
-**IMPORTANT:** Since the API uses cookie-based auth, you need to enable the sending of cookies between the Sandbox and the API by visiting Apollo Sandbox -> Settings (Gear Icon on top left next to the API URL) -> Toggling the "Include cookies" switch. This goes both for `localhost` and the official
+**IMPORTANT:** Since the API uses cookie-based auth, you need to enable the sending of cookies between the Sandbox and the API by visiting Apollo Sandbox -> Settings (Gear Icon on top left next to the API URL) -> Toggling the "Include cookies" switch.
 
 **NOTE:** Obviously both the client app and the API could be made a lot more bullet-proof but the point of this project is to serve as a demo and an example of how much I can get done in a day or two.
