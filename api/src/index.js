@@ -49,6 +49,7 @@ const keyGenerator = (directiveArgs, obj, args, context, info) =>
     info
   )}`;
 
+// Enable the rate-limiter directive
 const { rateLimitDirectiveTypeDefs, rateLimitDirectiveTransformer } =
   rateLimitDirective({ keyGenerator });
 
@@ -83,18 +84,13 @@ const server = new ApolloServer({
   validationRules: [depthLimit(7)],
 });
 
-/* Typically I like to use a CORS whitelist but
- * in this case I'm leaving it open for testing.
- */
-
 const whitelist = env("ALLOWED_ORIGINS")
   ? env("ALLOWED_ORIGINS").split(",")
   : [];
 
-// Ensure we wait for our server to start
+// Ensure we wait for the server to start
 server.start().then(() => {
-  // Set up our Express middleware to handle CORS, body parsing,
-  // and our expressMiddleware function.
+  // Set up the Express middleware to handle CORS, body parsing and other middleware
   app.use(
     "/",
     cors({

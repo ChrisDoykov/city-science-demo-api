@@ -1,9 +1,3 @@
-/*
- * Author: Kristiyan Doykov
- * Last updated: 14/12/2021
- * Purpose: Helper functions to be used throughout the server.
- */
-
 import jwt from "jsonwebtoken"; // For generating JWTs
 import { includes } from "ramda";
 
@@ -19,11 +13,7 @@ export const setSessionCookie = (res, sessionCookie) => {
   res.cookie("sessionToken", sessionCookie, {
     httpOnly: true,
     secure: true,
-    sameSite: env("NODE_ENV") !== "localhost", // To be able to use the Apollo Studio for testing
-    /* Typically good to have for production when
-     * client and API are on the same domain
-     */
-    // sameSite: true,
+    sameSite: env("NODE_ENV") !== "localhost",
     maxAge: 60 * 60 * 1000, // 1 hour
   });
 };
