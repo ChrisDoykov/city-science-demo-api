@@ -23,7 +23,7 @@ jobs:
         cache: 'yarn'
     - run: yarn install
     - name: Run tests
-      run: mocha
+      run: yarn test
       env:
         POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
         POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
