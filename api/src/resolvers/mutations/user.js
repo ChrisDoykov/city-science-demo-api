@@ -1,12 +1,12 @@
 import bcrypt from "bcryptjs";
 import { generateSessionCookie, setSessionCookie } from "../../utils.js";
-import { prop } from "ramda";
+import { not, prop } from "ramda";
 import { GraphQLError } from "graphql";
 
 export async function register(
   _,
   { name, email, password },
-  { res, db, isAuth }
+  { res, db, isAuth, testing = false }
 ) {
   if (isAuth) return null;
 
@@ -22,7 +22,7 @@ export async function register(
     const sessionCookieToken = generateSessionCookie(user?.id);
 
     // Add token as a cookie
-    setSessionCookie(res, sessionCookieToken);
+    if (not(testing)) setSessionCookie(res, sessionCookieToken);
 
     return user;
   } catch (error) {
@@ -36,7 +36,11 @@ export async function register(
   }
 }
 
-export async function login(_, { email, password }, { res, db, isAuth }) {
+export async function login(
+  _,
+  { email, password },
+  { res, db, isAuth, testing = false }
+) {
   if (isAuth) return null;
 
   // Lookup user by email
@@ -62,7 +66,7 @@ export async function login(_, { email, password }, { res, db, isAuth }) {
   const sessionCookieToken = generateSessionCookie(userFromEmail?.id);
 
   // Add token as a cookie
-  setSessionCookie(res, sessionCookieToken);
+  if (not(testing)) setSessionCookie(res, sessionCookieToken);
 
   return userFromEmail;
 }

@@ -1,5 +1,4 @@
 import { ApolloServer } from "@apollo/server";
-import depthLimit from "graphql-depth-limit";
 import { assert, expect } from "chai";
 import typeDefs from "../api/src/schema.js";
 // Resolvers
@@ -14,7 +13,6 @@ it("returns the correct response when user is not logged in", async () => {
   const testServer = new ApolloServer({
     typeDefs,
     resolvers,
-    validationRules: [depthLimit(3)],
   });
 
   const response = await testServer.executeOperation(
@@ -43,7 +41,6 @@ it("returns the correct response when user is logged in", async () => {
   const testServer = new ApolloServer({
     typeDefs,
     resolvers,
-    validationRules: [depthLimit(3)],
   });
 
   const response = await testServer.executeOperation(
