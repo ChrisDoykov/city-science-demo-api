@@ -15,7 +15,7 @@ export const setSessionCookie = (res, sessionCookie) => {
     secure: true,
     // Disabling so this API can be used with other demos
     // sameSite: env("NODE_ENV") !== "localhost",
-    sameSite: false,
+    sameSite: "None",
     maxAge: 60 * 60 * 1000, // 1 hour
   });
 };
