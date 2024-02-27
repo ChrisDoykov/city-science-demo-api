@@ -13,7 +13,9 @@ export const setSessionCookie = (res, sessionCookie) => {
   res.cookie("sessionToken", sessionCookie, {
     httpOnly: true,
     secure: true,
-    sameSite: env("NODE_ENV") !== "localhost",
+    // Disabling so this API can be used with other demos
+    // sameSite: env("NODE_ENV") !== "localhost",
+    sameSite: false,
     maxAge: 60 * 60 * 1000, // 1 hour
   });
 };
